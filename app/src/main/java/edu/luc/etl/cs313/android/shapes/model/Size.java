@@ -10,41 +10,60 @@ public class Size implements Visitor<Integer> {
 
 	@Override
 	public Integer onPolygon(final Polygon p) {
-		return -1;
+		return 1;
 	}
 
 	@Override
 	public Integer onCircle(final Circle c) {
+		Circle circle = new Circle(c.getRadius());
+		if(circle.getRadius() == c.getRadius())
+			return 1;
 		return -1;
 	}
 
 	@Override
 	public Integer onGroup(final Group g) {
-		return -1;
+		int totGroup = 0;
+		for(Shape shape : g.getShapes())
+			totGroup += shape.accept(this);
+		return totGroup;
 	}
 
 	@Override
 	public Integer onRectangle(final Rectangle q) {
+		Rectangle rect = new Rectangle(q.getWidth(), q.getHeight());
+		if(rect.getHeight() == q.getHeight() && rect.getWidth() == q.getWidth())
+			return 1;
 		return -1;
 	}
 
+	/*
+	Since these are visitors they just need to
+	accept the objects and will run the objects
+	method
+	 */
+
 	@Override
 	public Integer onOutline(final Outline o) {
-		return -1;
+		Shape outLine = o.getShape();
+		return outLine.accept(this);
 	}
 
 	@Override
 	public Integer onFill(final Fill c) {
-		return -1;
+		Shape fill = c.getShape();
+		return fill.accept(this);
 	}
 
 	@Override
 	public Integer onLocation(final Location l) {
-		return -1;
+		Shape loc = l.getShape();
+		return loc.accept(this);
 	}
 
 	@Override
 	public Integer onStroke(final Stroke c) {
-		return -1;
+		Shape stroke = c.getShape();
+		return stroke.accept(this);
 	}
 }

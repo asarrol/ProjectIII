@@ -49,13 +49,13 @@ public class BoundingBox implements Visitor<Location> {
 
 		for(int x = 1; x < shapeList.size(); x++)
 		{
-			Location boxedShapeLoc = shapeList.get(x).accept(this);
-			Rectangle boxingShapeList = (Rectangle)boxedShapeLoc.getShape();
+			Location Loc = shapeList.get(x).accept(this);
+			Rectangle RecSList = (Rectangle)Loc.getShape();
 
-			int minBox_x = boxedShapeLoc.getX();
-			int minBox_y = boxedShapeLoc.getY();
-			int maxBox_x = minBox_x + boxingShapeList.getWidth();
-			int maxBox_y = minBox_y + boxingShapeList.getHeight();
+			int minBox_x = Loc.getX();
+			int minBox_y = Loc.getY();
+			int maxBox_x = minBox_x + RecSList.getWidth();
+			int maxBox_y = minBox_y + RecSList.getHeight();
 
 			if(minBox_x < min_X)
 				min_X = minBox_x;
@@ -104,4 +104,5 @@ public class BoundingBox implements Visitor<Location> {
 	@Override
 	public Location onPolygon(final Polygon s) {
 		return onGroup(s);
+	}
 }
